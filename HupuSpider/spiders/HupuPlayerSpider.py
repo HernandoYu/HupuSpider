@@ -51,6 +51,7 @@ class HupuPlayerSpider(scrapy.Spider):
         player_info = response.css('div.team_data')
 
         name = player_info.css('h2::text').extract_first()
+        name = name.rstrip('\n')
         #self.log(name)
         info_dict[u'姓名'] = name
 
