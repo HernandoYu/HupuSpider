@@ -44,7 +44,7 @@ class HupuPlayerSpider(scrapy.Spider):
 
         if not os.path.exists('playerinfo.csv'):
             f = open('playerinfo.csv', 'a')
-            f.write(','.join(columns_ch).encode('utf-8'))
+            f.write(','.join(columns_ch[:10]).encode('utf-8'))
         else:
             f = open('playerinfo.csv', 'a')
 
@@ -62,7 +62,7 @@ class HupuPlayerSpider(scrapy.Spider):
             info_list = info.split(u'：')
             info_dict[info_list[0]] = info_list[1]
 
-        value_list = [info_dict[key] for key in columns_ch]
+        value_list = [info_dict[key] for key in columns_ch[:10]]
         f.write(','.join(value_list).encode('utf-8'))
 
         f.close()
