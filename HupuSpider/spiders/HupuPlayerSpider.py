@@ -40,6 +40,8 @@ class HupuPlayerSpider(scrapy.Spider):
     def parse_player(self, response):
         #self.log('parsing: %s' % response.url)
 
+        info_dict = dict(zip(columns_ch, [''] * len(columns_ch)))
+
         if not os.path.exists('playerinfo.csv'):
             f = open('playerinfo.csv', 'a')
             f.write(','.join(columns_ch).encode('utf-8'))
@@ -49,16 +51,18 @@ class HupuPlayerSpider(scrapy.Spider):
         player_info = response.css('div.team_data')
 
         name = player_info.css('h2::text').extract_first()
-        self.log(name)
-        f.write(name.encode('utf-8'))
+        #self.log(name)
+        info_dict[u'姓名'] = name
 
         for p in player_info.css('div.font p'):
             info = p.css('::text').extract_first()
             if p.css('a'):
                 info = info + p.css('a::text').extract_first()
-            info = info.split(u'：')[-1]
-            #self.log(info)
-            f.write(',')
-            f.write(info.encode('utf-8'))
+            info_list = info.split(u'：')
+            info_dict[info_list[0]] = info_list[1]
+
+        value_list = [info_dict[key] for key in columns_ch]
+        f.write(','.join(value_list).encode('utf-8'))
+
         f.close()
 
