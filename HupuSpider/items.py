@@ -11,8 +11,10 @@ import scrapy
 class HupuspiderItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    name = scrapy.Field()
+    name_ch = scrapy.Field()
+    name_en = scrapy.Field()
     position = scrapy.Field()
+    number = scrapy.Field()
     height = scrapy.Field()
     weight = scrapy.Field()
     birthday = scrapy.Field()
@@ -22,4 +24,3 @@ class HupuspiderItem(scrapy.Item):
     nation = scrapy.Field()
     salary_of_this_season = scrapy.Field()
     contract = scrapy.Field()
-    pass

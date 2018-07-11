@@ -14,6 +14,10 @@ BOT_NAME = 'HupuSpider'
 SPIDER_MODULES = ['HupuSpider.spiders']
 NEWSPIDER_MODULE = 'HupuSpider.spiders'
 
+columns_ch = [u'中文名', u'英文名', u'位置', u'号码', u'身高', u'体重', u'生日',
+              u'球队', u'学校', u'选秀', u'国籍', u'本赛季薪金', u'合同']
+columns_en = ['name_ch', 'name_en', 'position', 'number', 'height', 'weight', 'birthday',
+              'team', 'college', 'draft', 'nation', 'salary_of_this_season', 'contract']
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'HupuSpider (+http://www.yourdomain.com)'
@@ -64,9 +68,9 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'HupuSpider.pipelines.HupuspiderPipeline': 300,
-#}
+ITEM_PIPELINES = {
+    'HupuSpider.pipelines.HupuspiderPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html

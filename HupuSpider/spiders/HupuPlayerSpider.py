@@ -2,10 +2,7 @@
 
 import scrapy
 from HupuSpider.items import HupuspiderItem
-import os
-
-columns_ch = [u'姓名', u'位置', u'身高', u'体重', u'生日', u'球队',
-              u'学校', u'选秀', u'国籍', u'本赛季薪金', u'合同']
+from HupuSpider.settings import columns_ch, columns_en
 
 class HupuPlayerSpider(scrapy.Spider):
     name = 'hupu'
@@ -42,28 +39,31 @@ class HupuPlayerSpider(scrapy.Spider):
 
         info_dict = dict(zip(columns_ch, [''] * len(columns_ch)))
 
-        if not os.path.exists('playerinfo.csv'):
-            f = open('playerinfo.csv', 'a')
-            f.write(','.join(columns_ch[:10]).encode('utf-8'))
-        else:
-            f = open('playerinfo.csv', 'a')
-
         player_info = response.css('div.team_data')
 
         name = player_info.css('h2::text').extract_first()
         name = name.rstrip('\n')
         #self.log(name)
-        info_dict[u'姓名'] = name
+        if name.find(u'（') == -1:
+            info_dict[u'英文名'] = name
+        else:
+            info_dict[u'中文名'] = name[:name.find(u'（')]
+            info_dict[u'英文名'] = name[name.find(u'（')+1: name.find(u'）')]
 
         for p in player_info.css('div.font p'):
             info = p.css('::text').extract_first()
             if p.css('a'):
                 info = info + p.css('a::text').extract_first()
-            info_list = info.split(u'：')
+            info_list = info.replace(u',', u'，').split(u'：')
             info_dict[info_list[0]] = info_list[1]
 
-        value_list = [info_dict[key] for key in columns_ch[:10]]
-        f.write(','.join(value_list).encode('utf-8'))
+        position = info_dict[u'位置']
+        if position.find(u'（') > -1:
+            info_dict[u'位置'] = position[:position.find(u'（')]
+            info_dict[u'号码'] = position[position.find(u'（')+1: position.find(u'号')]
 
-        f.close()
+        item = HupuspiderItem()
+        for i in xrange(len(columns_ch)):
+            item[columns_en[i]] = info_dict[columns_ch[i]]
+        yield item
 
