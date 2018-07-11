@@ -42,7 +42,7 @@ class HupuPlayerSpider(scrapy.Spider):
         player_info = response.css('div.team_data')
 
         name = player_info.css('h2::text').extract_first()
-        name = name.rstrip('\n')
+        name = name.strip('\n')
         #self.log(name)
         if name.find(u'（') == -1:
             info_dict[u'英文名'] = name

@@ -14,12 +14,13 @@ class HupuspiderPipeline(object):
         if not os.path.exists('playerinfo.csv'):
             f = open('playerinfo.csv', 'a')
             f.write(','.join(columns_ch).encode('utf-8'))
+            f.write('\n')
         else:
             f = open('playerinfo.csv', 'a')
 
         value_list = [item[key] for key in columns_en]
-        f.write(','.join(value_list).encode('utf-8'))
-
+        f.write(','.join(value_list).strip('\n').encode('utf-8'))
+        f.write('\n')
         f.close()
 
         return item
