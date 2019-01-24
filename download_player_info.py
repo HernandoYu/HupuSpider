@@ -33,14 +33,14 @@ def download_player_info_one_team(team_en, team_ch):
         tds = tr.find_all('td')
         info_dict = dict()
         info_dict = {'team_ch': team_ch, 'team_en': team_en}
-        info_dict['name_ch'] = tds[1].find('b').getText().encode('utf-8')
-        info_dict['name_en'] = tds[1].find('p').find('b').getText().encode('utf-8')
-        info_dict['number'] = tds[2].getText().encode('utf-8')
-        info_dict['position'] = tds[3].getText().encode('utf-8')
-        info_dict['height'] = tds[4].getText().encode('utf-8')
-        info_dict['weight'] = tds[5].getText().encode('utf-8')
-        info_dict['birthday'] = tds[6].getText().encode('utf-8')
-        info_dict['annual_salary'] = tds[7].find('b').getText().encode('utf-8')
+        info_dict['name_ch'] = tds[1].find('b').getText()
+        info_dict['name_en'] = tds[1].find('p').find('b').getText()
+        info_dict['number'] = tds[2].getText()
+        info_dict['position'] = tds[3].getText()
+        info_dict['height'] = tds[4].getText()
+        info_dict['weight'] = tds[5].getText()
+        info_dict['birthday'] = tds[6].getText()
+        info_dict['annual_salary'] = tds[7].find('b').getText()
         player_list.append(info_dict)
 
     return player_list

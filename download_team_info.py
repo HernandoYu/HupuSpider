@@ -15,8 +15,8 @@ def download_team_info():
     with open('team_info.txt', 'w') as fp:
         for teamlink in body.find_all('a', attrs = {'class': 'a_teamlink'}):
             url = teamlink['href']
-            name_en = url.split('/')[-1].encode('utf-8')
-            name_ch = teamlink.find('h2').getText().encode('utf-8')
+            name_en = url.split('/')[-1]
+            name_ch = teamlink.find('h2').getText()
             fp.write('%s\t%s\n' % (name_ch, name_en))
     fp.close()
 
