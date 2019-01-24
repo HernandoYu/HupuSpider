@@ -53,7 +53,7 @@ def download_player_info():
         player_list.extend(download_player_info_one_team(team, team_info_dict[team]))
 
     column_list = ['name_ch', 'name_en', 'team_ch', 'team_en', 'number', 'position',
-                   'height', 'weight', 'weight', 'birthday', 'annual_salary']
+                   'height', 'weight', 'birthday', 'annual_salary']
     player_df = pd.DataFrame(player_list, columns = column_list)
 
     player_df.to_csv('player_info.csv', index=False, encoding='gbk')
